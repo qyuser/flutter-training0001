@@ -28,17 +28,47 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => new _MyHomePageState();
 }
 
+class Data {
+  int _price;
+  String _name;
+
+  Data(this._name, this._price): super();
+
+  @override
+  String toString() {
+    return _name + ':' + _price.toString() + '円';
+  }
+}
+
 class _MyHomePageState extends State<MyHomePage> {
   String _message;
   int _num;
+
+  static final _data = [
+    Data('Apple', 300),
+    Data('Banana', 198),
+    Data('Chery', 480),
+    Data('Greap', 680),
+    Data('Kome', 4800),
+  ];
+  Data _item;
 
   @override
 
   void initState() {
     super.initState();
-    _message = 'オッパッピー';
-    _num = 1;
+    _item = _data[0];//初期値
+    /*_message = 'オッパッピー';
+    _num = 1;*/
   }
+
+  void _setData() {
+    setState((){
+      _item = (_data..shuffle()).first;//ボタンを押下した後
+    });
+  }
+
+  @override
 
   void _setMessage() {
     setState((){
@@ -61,11 +91,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       body: Text(
-        _message,
+        //_message,
+        _item.toString(),
         style: TextStyle(fontSize:16.0),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _setMessage,
+        //onPressed: _setMessage,
+        onPressed: _setData,
         tooltip: 'set message.',
         child: Icon(Icons.star),
       ),
